@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JetFuel</title>
+    <link href='main.css' rel='stylesheet' type='text/css'></link>
+  </head>
+  <body>
+
+    <header>
+      <h1>JetFuel</h1>
+      <section id='topic-input-container'>
+        <label id='topic-label' for='topic-input'>New Topic</label>
+        <input id='topic-input' placeholder='new topic' type='text'>
+        <button id='topic-add-btn'>Add</button>
+      </section>
+    </header>
+
+    <section id='content-container'>
+
+      <article class='topic-card'>
+
+        <header>
+          <h3>Chipmunks</h3>
+          <div>
+            <h4>qty</h4>
+            <h4>expand</h4>
+          </div>
+        </header>
+
+        <section class='card-body'>
+
+          <div class='form-sort-container'>
+            <div class='add-form'>
+              <label class='title-label'>Title</label>
+              <input class='title-input'>
+              <label class='url-label'>Url</label>
+              <input class='url-input'>
+              <button>Add</button>
+            </div>
+            <div class='sort-options'>
+              <h3>Sort</h3>
+              <div class='radio-buttons'>
+                <label>Recently Added<input type='radio' name='sort'></label>
+                <label>Most Popular <input type='radio' name='sort'></label>
+              </div>
+            </div>
+          </div>
+
+          <div class='links-container'>
+            <h5>links listsed here</h5>
+          </div>
+
+        </section>
+
+      </article>
+
+    </section>
+
+  </body>
+    <script>window.jQuery || document.write('<script src="jquery-3.1.1.js"><\/script>')</script>
+    <script src='javascript.js'></script>
+</html>
