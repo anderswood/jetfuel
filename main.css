@@ -1,3 +1,8 @@
-body {
-  background: magenta;
-}
+
+#topic-input-container {outline: 2px solid blue;}
+#content-container {outline: 2px solid red;}
+.topic-card {outline: 4px solid orange;}
+.form-sort-container {outline: 1px solid gray;}
+.add-form {outline: 1px solid green;}
+.sort-options {outline: 1px solid black;}
+.links-container {outline: 1px solid purple;}
