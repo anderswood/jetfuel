@@ -1,0 +1,26 @@
+{
+  "name": "jetfuel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "javascript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anderswood/jetfuel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anderswood/jetfuel/issues"
+  },
+  "homepage": "https://github.com/anderswood/jetfuel#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "md5": "^2.2.1"
+  }
+}
