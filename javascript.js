@@ -1,6 +1,7 @@
 
 $('#topic-add-btn').on('click', () => {
   let newTopic = $('#topic-input').val()
+
   appendTopic(newTopic)
 })
 
@@ -8,16 +9,31 @@ $('#content-container').on('click', '.link-add-btn', function() {
   //using es5 because es6 changes scope of 'this'.. how to use es6?
   let title = $(this).siblings('.title-input').val()
   let url = $(this).siblings('.url-input').val()
+
   appendLink(title, url, this)
   console.log(this);
 })
 
+$('#content-container').on('click', '.topic-title', function(e) {
+  // console.log(this);
+  let cardBody = $(this).siblings('.card-body-initial')
+  console.log(cardBody)
+
+  cardBody.toggleClass('card-body-hide')
+})
+
+
+// topicName.on('click', () => $('.card-body-initial').toggleClass('card-body-show'))
+
 function appendLink(newTitle, newUrl, thisLocale) {
-  let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container')[0];
+  let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
+
   console.log(linksContainer);
   linksContainer.append(
-    `<h4>${newTitle}</h4>
-    <h4>${newUrl}</h4>`
+    `<div>
+      <h4>${newTitle}</h4>
+      <h4>${newUrl}</h4>
+    </div>`
   )
 }
 
@@ -25,14 +41,14 @@ const appendTopic = (newTopicText) => {
   $('#content-container').append(
     `
     <article class='topic-card'>
-      <header>
+      <header class='topic-title'>
         <h3>${newTopicText}</h3>
         <div>
           <h4>qty</h4>
           <h4>expand</h4>
         </div>
       </header>
-      <section class='card-body'>
+      <section class='card-body-initial'>
         <div class='form-sort-container'>
           <div class='add-form'>
             <label class='title-label'>Title</label>
