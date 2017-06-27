@@ -3,9 +3,22 @@
 
 $('#topic-add-btn').on('click', () => {
   //POST new topic to the server
-  let newTopic = $('#topic-input').val()
+  let newTopic = $('#topic-input').val();
 
-  appendTopic(newTopic)
+  fetch('/api/topics/', {
+    method: 'POST',
+    headers: { "content-type":"application/json"},
+    body: JSON.stringify({ topic: newTopic })
+  })
+  .then(resp => {
+    if (resp.status === 201) {
+      appendTopic(newTopic)
+    } else if (resp.status === 422) {
+      //function needed to toggle on display error message
+      alert('invalid entry')
+    }
+  })
+  .catch(error => console.log(error))
 })
 
 $('#content-container').on('click', '.link-add-btn', function() {
