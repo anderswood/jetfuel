@@ -25,10 +25,24 @@ $('#content-container').on('click', '.link-add-btn', function() {
   //using es5 because es6 changes scope of 'this'.. how to use es6?
   //POST a new link to the specific topic
   //will need variable for topic id that will be used as query parameter
-  let title = $(this).siblings('.title-input').val()
-  let url = $(this).siblings('.url-input').val()
+  let linkTitle = $(this).siblings('.title-input').val()
+  let link = $(this).siblings('.url-input').val()
+  let topicId = $(this).parents('.card-body-initial').siblings('.topic-title').children('h3').text();
+  console.log(topicId);
 
-  appendLink(title, url, this)
+  fetch('/api/links/', {
+    method: 'POST',
+    headers: { "content-type":"application/json" },
+    body: JSON.stringify({ link: link, linkTitle: linkTitle, topicId: topicId })
+  })
+  .then(resp => {
+    if (resp.status === 201) {
+      appendLink(linkTitle, link, this)
+    } else if (resp.status === 422) {
+      alert('invalid link entry')
+    }
+  })
+  .catch(error => console.log(error))
 })
 
 $('#content-container').on('click', '.topic-title', function(e) {

@@ -31,7 +31,24 @@ app.post('/api/topics/', (request, response) => {
 
   app.locals.topics[id] = topic;
 
+  console.log(app.locals.topics);
   response.status(201).json({ id, topic })
+})
+
+app.post('/api/links/', (request, response) => {
+  const { link, linkTitle, topicId } = request.body;
+  const id = md5(link);
+
+  if (!link) {
+    return response.status(422).send({
+      error: 'no valid link was provided'
+    });
+  }
+
+  app.locals.links[id] = { url: link, title: linkTitle, topic_ID: topicId };
+
+  console.log(app.locals.links);
+  response.status(201).json({ id, link, linkTitle, topicId })
 })
 
 app.listen(app.get('port'), () => {
