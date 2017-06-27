@@ -1,5 +1,8 @@
 
+//need a document.ready GET request to the server to return all the things
+
 $('#topic-add-btn').on('click', () => {
+  //POST new topic to the server
   let newTopic = $('#topic-input').val()
 
   appendTopic(newTopic)
@@ -7,29 +10,25 @@ $('#topic-add-btn').on('click', () => {
 
 $('#content-container').on('click', '.link-add-btn', function() {
   //using es5 because es6 changes scope of 'this'.. how to use es6?
+  //POST a new link to the specific topic
+  //will need variable for topic id that will be used as query parameter
   let title = $(this).siblings('.title-input').val()
   let url = $(this).siblings('.url-input').val()
 
   appendLink(title, url, this)
-  console.log(this);
 })
 
 $('#content-container').on('click', '.topic-title', function(e) {
-  // console.log(this);
   let cardBody = $(this).siblings('.card-body-initial')
-  console.log(cardBody)
 
   cardBody.toggleClass('card-body-hide')
 })
 
-
-// topicName.on('click', () => $('.card-body-initial').toggleClass('card-body-show'))
-
 function appendLink(newTitle, newUrl, thisLocale) {
   let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
 
-  console.log(linksContainer);
   linksContainer.append(
+    //need to revisit how we structuring the links....later
     `<div>
       <h4>${newTitle}</h4>
       <h4>${newUrl}</h4>
