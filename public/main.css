@@ -1,6 +1,58 @@
 
+html {
+  font-family: 'Exo 2', sans-serif;
+}
+
+body {
+  background: url('./images/kimon-maritz-181128-min.jpg');
+  background-size: cover;
+  /*margin: 0;
+  height: 100vh;*/
+
+}
+
+h1 {
+  font-family: 'Audiowide', cursive;
+  font-size: 50px;
+  padding-bottom: 10px;
+  margin: 25px 0;
+}
+
+#title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#icon-label {
+  font-size: 1px;
+}
+
+svg {
+  margin: 0 5px;
+}
+
 #topic-input-container {
-  outline: 2px solid blue;
+  background: rgba(105, 156, 186, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#topic-label, #topic-input, #topic-add-btn {
+  margin: 10px 10px;
+}
+
+.topic-card {
+
+}
+
+.topic-title {
+
+}
+
+.card-body-initial {
+
 }
 
 #content-container {
@@ -35,3 +87,5 @@
 .card-body-hide {
   display: none;
 }
+
+/*font-family: 'Exo 2', sans-serif;
