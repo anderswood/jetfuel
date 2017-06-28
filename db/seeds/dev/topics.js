@@ -16,7 +16,7 @@ let topicsData = [{
 
 const createTopic = (knex, topic) => {
   return knex('topics').insert({
-    name: topic.title
+    name: topic.name
   }, 'id') //return auto-generated id
   .then(topicId => {
     let linkPromises = [];
