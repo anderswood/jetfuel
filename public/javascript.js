@@ -9,24 +9,17 @@
 $('#add-btn-div').on('click', () => {
   //POST new topic to the server
   let newTopic = $('#topic-input').val();
-  console.log('here1');
 
-
-  fetch('/api/topics/', {
-    method: 'POST',
-    headers: { "content-type":"application/json"},
-    body: JSON.stringify({ topic: newTopic })
-  })
-  .then(resp => {
-    if (resp.status === 201) {
-      console.log('here');
-      appendTopic(newTopic)
-    } else if (resp.status === 422) {
+  $.post('/api/v1/topics/', { name: newTopic }, (res, text, resObj) => {
+    if (resObj.status === 201) {
+      appendTopic(newTopic, res.id)
+    } else if (resObj.status === 422) {
       //function needed to toggle on display error message
       alert('invalid entry')
     }
   })
-  .catch(error => console.log(error))
+    .catch(error => console.log(error))
+
 })
 
 $('#content-container').on('click', '.link-add-btn', function() {
@@ -71,7 +64,7 @@ function appendLink(newTitle, newUrl, thisLocale) {
   )
 }
 
-const appendTopic = (newTopicText) => {
+const appendTopic = (newTopicText, id) => {
   $('#content-container').append(
     `<article class='topic-card'>
       <header class='topic-title'>
@@ -85,7 +78,7 @@ const appendTopic = (newTopicText) => {
             <input class='title-input'>
             <label class='url-label'>Url</label>
             <input class='url-input'>
-            <button class='link-add-btn'>Add</button>
+            <button id=${id} class='link-add-btn'>Add</button>
           </div>
           <div class='sort-options'>
             <h3>Sort</h3>
