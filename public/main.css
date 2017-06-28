@@ -1,31 +1,168 @@
 
+html {
+  font-family: 'Exo 2', sans-serif;
+}
+
+body {
+  background: url('./images/kimon-maritz-181128-min.jpg');
+  background-size: cover;
+  /*margin: 0;
+  height: 100vh;*/
+
+}
+
+h1 {
+  font-family: 'Audiowide', cursive;
+  font-size: 50px;
+  padding-bottom: 10px;
+  margin: 25px 0;
+}
+
+h3 {
+  margin: 12px 0;
+  color: #FFF;
+}
+
+h4 {
+  margin: 15px 0;
+}
+
+h5 {
+  margin: 10px 0;
+  font-weight: 400;
+  color: #FFF;
+}
+
+#title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#icon-label {
+  font-size: 1px;
+}
+
+svg {
+  margin: 0 5px;
+}
+
 #topic-input-container {
-  outline: 2px solid blue;
+  background: rgba(105, 156, 186, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
-#content-container {
-  outline: 2px solid red;
+#topic-text-title {
+  padding-bottom: 4px;
 }
 
-.topic-card {
-  outline: 4px solid orange;
+#topic-label, #topic-input, #topic-add-btn {
+  margin: 0 10px;
+}
+
+#topic-input {
+  width: 150px;
+  border: none;
+  color: #FFF;
+  outline-color: rgba(105, 156, 186, 0.9);
+  background: rgba(105, 156, 186, 0.15);
+  text-indent: 4px;
+  padding: 4px;
+}
+
+#topic-input::-webkit-input-placeholder {
+  text-indent: 4px;
+  color: rgba(237, 236, 244, 1);
+}
+
+#add-btn-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: 1px solid rgba(105, 156, 186, 0.9);
+  height: 20.8px;
+}
+
+#add-btn-div:hover {
+  background-color: rgba(105, 156, 186, 1);
   cursor: pointer;
 }
 
+#add-btn-text {
+  margin: 0 5px;
+}
+
+.topic-card {
+
+}
+
+.topic-title {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(105, 156, 186, 0.7);
+}
+
+.topic-title:hover {
+  background: rgba(105, 156, 186, 1);
+  cursor: pointer;
+}
+
+.topic-text {
+  margin-left: 20px;
+}
+
+.link-qty {
+  margin-right: 10px;
+}
+
+.card-body-initial {
+
+}
+
 .form-sort-container {
-  outline: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(79, 66, 58, 0.5);
+  margin-top: 2px;
 }
 
 .add-form {
-  outline: 1px solid green;
+  width: 60%;
 }
 
 .sort-options {
-  outline: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+#content-container {
+  /*outline: 2px solid red;*/
+}
+
+.topic-card {
+  /*outline: 4px solid orange;*/
+  /*cursor: pointer;*/
+}
+
+.form-sort-container {
+  /*outline: 1px solid gray;*/
+}
+
+.add-form {
+  /*outline: 1px solid green;*/
+}
+
+.sort-options {
+  /*outline: 1px solid black;*/
 }
 
 .links-container {
-  outline: 1px solid purple;
+  /*outline: 1px solid purple;*/
 }
 
 .card-body-initial {
@@ -35,3 +172,5 @@
 .card-body-hide {
   display: none;
 }
+
+/*font-family: 'Exo 2', sans-serif;

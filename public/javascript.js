@@ -1,9 +1,11 @@
 
 //need a document.ready GET request to the server to return all the things
 
-$('#topic-add-btn').on('click', () => {
+$('#add-btn-div').on('click', () => {
   //POST new topic to the server
   let newTopic = $('#topic-input').val();
+  console.log('here1');
+
 
   fetch('/api/topics/', {
     method: 'POST',
@@ -12,6 +14,7 @@ $('#topic-add-btn').on('click', () => {
   })
   .then(resp => {
     if (resp.status === 201) {
+      console.log('here');
       appendTopic(newTopic)
     } else if (resp.status === 422) {
       //function needed to toggle on display error message
@@ -65,14 +68,10 @@ function appendLink(newTitle, newUrl, thisLocale) {
 
 const appendTopic = (newTopicText) => {
   $('#content-container').append(
-    `
-    <article class='topic-card'>
+    `<article class='topic-card'>
       <header class='topic-title'>
-        <h3>${newTopicText}</h3>
-        <div>
-          <h4>qty</h4>
-          <h4>expand</h4>
-        </div>
+        <h3 class='topic-text'>${newTopicText}</h3>
+        <h3 class='link-qty'>qty</h3>
       </header>
       <section class='card-body-initial'>
         <div class='form-sort-container'>
@@ -91,11 +90,7 @@ const appendTopic = (newTopicText) => {
             </div>
           </div>
         </div>
-        <div class='links-container'>
-          <h5>links listsed here</h5>
-        </div>
+        <div class='links-container'></div>
       </section>
-    </article>
-    `
-  )
+    </article>`)
 }
