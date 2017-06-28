@@ -1,5 +1,10 @@
+//getTopics function
+//getLinks function
+//appendTopics function
+//appendLinks to topics function
+//run all of the above in onLoad function
 
-//need a document.ready GET request to the server to return all the things
+
 
 $('#add-btn-div').on('click', () => {
   //POST new topic to the server
