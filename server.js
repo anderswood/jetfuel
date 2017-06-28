@@ -24,7 +24,7 @@ app.get('/api/v1/topics', (req, res) => {
         res.status(200).json(topics);
       } else {
         res.status(404).json({
-          error: 'No topics found'
+          error: 'No topics were found'
         });
       }
     })
@@ -48,6 +48,44 @@ app.post('/api/v1/topics', (req, res) => {
   database('topics').insert(topic, 'id')
     .then(topic => {
       res.status(201).json({ id: topic[0] })
+    })
+    .catch(error => {
+      res.status(500).json({ error })
+    })
+});
+
+app.get('/api/v1/links', (req, res) => {
+  database('links').select()
+    .then(links => {
+      if (links.length) {
+        res.status(200).json(links)
+      } else {
+        res.status(404).json({
+          error: 'No links were found'
+        })
+      }
+    })
+    .catch(error => {
+      res.status(500).json({ error })
+    });
+});
+
+app.post('/api/v1/links', (req, res) => {
+  const link = req.body;
+
+  for (let requiredParameter of ['link_title', 'long_link', 'short_link', 'click_count', 'topic_id']) {
+    if (!link[requiredParameter]) {
+      return res.status(422).json({
+        error: `Expected format: { link_title: <String>, long_link: <String>,
+          short_link: <String>, click_count: <Integer>, topic_id: <Integer> }.
+          You are missing a ${requiredParameter} property.`
+      })
+    }
+  }
+
+  database('links').insert(link, 'id')
+    .then(link => {
+      res.status(201).json({ id: link[0] })
     })
     .catch(error => {
       res.status(500).json({ error })
