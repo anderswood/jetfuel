@@ -1,23 +1,23 @@
 
 let topicsData = [{
-  name: 'Cat',
+  name: 'Docs',
   links: [
-    {link_title: 'the google', long_link: 'google.com', short_link: 'abc', click_count: 3},
-    {link_title: 'the cnn', long_link: 'cnn.com', short_link: 'cnn', click_count: 0},
+    {link_title: 'the google', long_link: 'http://www.google.com', short_link: 'jet.fuel/5ZvQv', click_count: 3},
+    {link_title: 'MDN', long_link: 'https://developer.mozilla.org/en-US/', short_link: 'jet.fuel/5vohV', click_count: 0},
    ]
 },
 {
-  name: 'Dog',
+  name: 'Wasting Time',
   links: [
-    {link_title: 'the dog', long_link: 'dog.com', short_link: 'dog', click_count: 13},
-    {link_title: 'the dogggg', long_link: 'dogggg.com', short_link: 'doggy', click_count: 5},
+    {link_title: 'the Twitter', long_link: 'http://www.twitter.com', short_link: 'jet.fuel/2H1PG', click_count: 13},
+    {link_title: 'the \'stagram', long_link: 'http://www.instagram.com', short_link: 'jet.fuel/zsWr', click_count: 5},
    ]
 }]
 
 const createTopic = (knex, topic) => {
   return knex('topics').insert({
     name: topic.name
-  }, 'id') //return auto-generated id
+  }, 'id')
   .then(topicId => {
     let linkPromises = [];
 
@@ -42,8 +42,8 @@ const createLink = (knex, link) => {
 };
 
 exports.seed = (knex, Promise) => {
-  return knex('links').del() // delete links first
-    .then(() => knex('topics').del()) // delete all papers
+  return knex('links').del()
+    .then(() => knex('topics').del())
     .then(() => {
       let topicPromises = [];
 
