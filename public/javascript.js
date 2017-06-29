@@ -18,14 +18,11 @@ $('#add-btn-div').on('click', () => {
 })
 
 $('#content-container').on('click', '.link-add-btn', function() {
-  //using es5 because es6 changes scope of 'this'.. how to use es6?
   //POST a new link to the specific topic
   //will need variable for topic id that will be used as query parameter
-  let linkTitle = $(this).siblings('.title-input').val();
-  let longLink = $(this).siblings('.url-input').val();
+  let linkTitle = $(this).siblings('.form-container').find('.title-input').val();
+  let longLink = $(this).siblings('.form-container').find('.url-input').val();
   let topicId = $(this).attr('id');
-  console.log(topicId);
-  // let topicId = $(this).parents('.card-body-initial').siblings('.topic-title').children('h3').text();
   let bodyObj = {
     link_title: linkTitle,
     long_link: longLink,
@@ -34,7 +31,7 @@ $('#content-container').on('click', '.link-add-btn', function() {
     topic_id: topicId
   };
 
-  $.post('/api/v1/links/', bodyObj, (res,text,resObj) => {
+  $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
       appendLink(linkTitle, 'shortLink', this)
     } else if (resp.status === 422) {
@@ -45,7 +42,7 @@ $('#content-container').on('click', '.link-add-btn', function() {
 })
 
 $('#content-container').on('click', '.topic-title', function() {
-  let cardBody = $(this).siblings('.card-body-initial')
+  let cardBody = $(this).siblings('.card-body')
 
   cardBody.toggleClass('card-body-hide')
 })
@@ -55,9 +52,9 @@ function appendLink(newTitle, shortLink, thisLocale) {
 
   linksContainer.append(
     //need to revisit how we structuring the links....later
-    `<div>
-      <h4>${newTitle}</h4>
-      <h4>${shortLink}</h4>
+    `<div class='link-container'>
+      <h4 class='link-title'>${newTitle}</h4>
+      <h4 class='link-url'>${shortLink}</h4>
     </div>`
   )
 }
@@ -68,11 +65,12 @@ function getContent() {
       $.get('/api/v1/topics').then(topics => {
         topics.forEach(topic => {
           appendTopic(topic.name, topic.id)
-          links.forEach(link => {
-            let linkAddButton = $(`button[id='${topic.id}']`)
+          let linkAddButton = $(`button[id='${topic.id}']`)
 
+          $(linkAddButton).closest('.card-body').addClass('card-body-hide');
+          links.forEach(link => {
             if (topic.id === link.topic_id) {
-              appendLink(link.link_title, link.short_link, linkAddButton)
+              appendLink(link.link_title, link.short_link, linkAddButton);
             }
           })
         })
@@ -87,20 +85,32 @@ const appendTopic = (newTopicText, id) => {
         <h3 class='topic-text'>${newTopicText}</h3>
         <h3 class='link-qty'>qty</h3>
       </header>
-      <section class='card-body-initial'>
+      <section class='card-body'>
         <div class='form-sort-container'>
           <div class='add-form'>
-            <label class='title-label'>Title</label>
-            <input class='title-input'>
-            <label class='url-label'>Url</label>
-            <input class='url-input'>
-            <button id=${id} class='link-add-btn'>Add</button>
+            <div class='form-container'>
+              <div class='title-container'>
+                <label class='title-label'><h5>Title</h5></label>
+                <input class='title-input link-inputs' placeholder='title'>
+              </div>
+              <div class='url-container'>
+                <label class='url-label'><h5 class='url-text'>Url</h5></label>
+                <input class='url-input link-inputs' placeholder='url'>
+              </div>
+            </div>
+            <button id=${id} class='link-add-btn'><h5>Add</h5></button>
           </div>
           <div class='sort-options'>
-            <h3>Sort</h3>
-            <div class='radio-buttons'>
-              <label>Recently Added<input type='radio' name='sort'></label>
-              <label>Most Popular <input type='radio' name='sort'></label>
+            <h4>Sort</h4>
+            <div class='radio-btns'>
+              <label class='radio-label'>
+                <h5>Recently Added</h5>
+                <input class='radio-added' type='radio' name='sort'>
+              </label>
+              <label class='radio-label'>
+                <h5 class='most-pop-text'>Most Popular</h5>
+                <input class='radio-popular' type='radio' name='sort'>
+              </label>
             </div>
           </div>
         </div>
