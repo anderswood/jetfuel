@@ -47,6 +47,12 @@ $('#content-container').on('click', '.topic-title', function() {
   cardBody.toggleClass('card-body-hide')
 })
 
+$('#content-container').on('click', '.radio-btn', function() {
+  console.log($(this).val());
+  //make get call to get links associated with this topic
+  //for each loop with 'appendLink' for each link to this topic
+})
+
 function appendLink(newTitle, shortLink, thisLocale) {
   let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
 
@@ -105,11 +111,11 @@ const appendTopic = (newTopicText, id) => {
             <div class='radio-btns'>
               <label class='radio-label'>
                 <h5>Recently Added</h5>
-                <input class='radio-added' type='radio' name='sort'>
+                <input class='radio-btn radio-added' value='recent' type='radio' name='sort'>
               </label>
               <label class='radio-label'>
                 <h5 class='most-pop-text'>Most Popular</h5>
-                <input class='radio-popular' type='radio' name='sort'>
+                <input class='radio-btn radio-popular' value='popular' type='radio' name='sort'>
               </label>
             </div>
           </div>
