@@ -1,10 +1,5 @@
-//getTopics function
-//getLinks function
-//appendTopics function
-//appendLinks to topics function
-//run all of the above in onLoad function
 
-
+getContent()
 
 $('#add-btn-div').on('click', () => {
   //POST new topic to the server
@@ -13,13 +8,13 @@ $('#add-btn-div').on('click', () => {
   $.post('/api/v1/topics/', { name: newTopic }, (res, text, resObj) => {
     if (resObj.status === 201) {
       appendTopic(newTopic, res.id)
+
     } else if (resObj.status === 422) {
       //function needed to toggle on display error message
       alert('invalid entry')
     }
   })
     .catch(error => console.log(error))
-
 })
 
 $('#content-container').on('click', '.link-add-btn', function() {
@@ -47,10 +42,9 @@ $('#content-container').on('click', '.link-add-btn', function() {
     }
   })
   .catch(error => console.log(error))
-
 })
 
-$('#content-container').on('click', '.topic-title', function(e) {
+$('#content-container').on('click', '.topic-title', function() {
   let cardBody = $(this).siblings('.card-body-initial')
 
   cardBody.toggleClass('card-body-hide')
@@ -66,6 +60,24 @@ function appendLink(newTitle, shortLink, thisLocale) {
       <h4>${shortLink}</h4>
     </div>`
   )
+}
+
+function getContent() {
+  $.get('/api/v1/links')
+    .then((links) => {
+      $.get('/api/v1/topics').then(topics => {
+        topics.forEach(topic => {
+          appendTopic(topic.name, topic.id)
+          links.forEach(link => {
+            let linkAddButton = $(`button[id='${topic.id}']`)
+
+            if (topic.id === link.topic_id) {
+              appendLink(link.link_title, link.short_link, linkAddButton)
+            }
+          })
+        })
+      })
+    })
 }
 
 const appendTopic = (newTopicText, id) => {
