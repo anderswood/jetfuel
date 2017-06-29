@@ -4,11 +4,12 @@ html {
 }
 
 body {
-  background: url('./images/kimon-maritz-181128-min.jpg');
+  background: linear-gradient(
+    rgba(156, 148, 137, 0.5),
+    rgba(191, 218, 233, 0.5)),
+    url('./images/kimon-maritz-181128-min.jpg');
   background-size: cover;
-  /*margin: 0;
-  height: 100vh;*/
-
+  /*filter: blur(5px);*/
 }
 
 h1 {
@@ -24,13 +25,19 @@ h3 {
 }
 
 h4 {
-  margin: 15px 0;
+  margin: 4px 0;
+  color: #FFF;
 }
 
 h5 {
-  margin: 10px 0;
+  margin: 2px 0;
   font-weight: 400;
   color: #FFF;
+}
+
+#header, #content-container {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 #title-container {
@@ -82,6 +89,8 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
   outline: 1px solid rgba(105, 156, 186, 0.9);
   height: 20.8px;
 }
@@ -96,7 +105,7 @@ svg {
 }
 
 .topic-card {
-
+  margin-top: 10px;
 }
 
 .topic-title {
@@ -118,59 +127,136 @@ svg {
   margin-right: 10px;
 }
 
-.card-body-initial {
-
-}
-
 .form-sort-container {
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(79, 66, 58, 0.5);
-  margin-top: 2px;
+  margin-top: 1px;
+  padding-bottom: 4px;
+  padding-top: 2px;
+}
+
+.form-sort-container, .links-container {
+  width: 98%;
+  margin: 0 auto;
 }
 
 .add-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60%;
 }
 
-.sort-options {
+.form-container {
+
+}
+
+.title-container, .url-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.url-text {
+  margin-left: 9px;
+}
+
+.link-inputs {
+  width: 150px;
+  border: none;
+  color: #FFF;
+  outline-color: rgba(79, 66, 58, 0.9);
+  background: rgba(79, 66, 58, 0.15);
+  text-indent: 4px;
+  padding: 4px;
+  margin-left: 6px;
+}
+
+.link-inputs::-webkit-input-placeholder {
+  text-indent: 4px;
+  color: rgba(237, 236, 244, 1);
+}
+
+.url-input {
+  margin-top: 4px;
+}
+
+.link-add-btn {
+  margin-left: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: 1px solid rgba(79, 66, 58, 0.9);
+  height: 20.8px;
+}
+
+.link-add-btn h5 {
+  margin: 0 5px;
+}
+
+.link-add-btn:hover {
+  background-color: rgba(79, 66, 58, 1);
+  cursor: pointer;
+}
+
+.sort-options {
+  text-align: center;
   width: 40%;
 }
 
-#content-container {
-  /*outline: 2px solid red;*/
+.radio-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.topic-card {
-  /*outline: 4px solid orange;*/
-  /*cursor: pointer;*/
+.radio-label h5 {
+  margin-right: 6px;
 }
 
-.form-sort-container {
-  /*outline: 1px solid gray;*/
+.radio-popular, .radio-added {
+    margin: 3px 0 0 0;
 }
 
-.add-form {
-  /*outline: 1px solid green;*/
-}
-
-.sort-options {
-  /*outline: 1px solid black;*/
-}
-
-.links-container {
-  /*outline: 1px solid purple;*/
-}
-
-.card-body-initial {
-  display: block;
+.most-pop-text {
+  margin-left: 12px;
 }
 
 .card-body-hide {
   display: none;
 }
 
-/*font-family: 'Exo 2', sans-serif;
+.links-container {
+  background: rgba(105, 156, 186, 0.8);
+  width: 98%;
+  margin: 0 auto;
+}
+
+.link-container {
+
+}
+
+.link-title, .link-url {
+  display: inline-block;
+}
+
+.link-title {
+  width: 35%;
+  margin-left: 12px;
+}
+
+.link-url {
+  width: 60%;
+}
+
+@media screen and (max-width: 460px) {
+  .link-inputs, #topic-input {
+    width: 90px;
+  }
+
+
+}
