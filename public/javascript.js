@@ -1,6 +1,7 @@
 
 getContent()
 
+
 $('#add-btn-div').on('click', () => {
   //POST new topic to the server
   let newTopic = $('#topic-input').val();
@@ -22,18 +23,20 @@ $('#content-container').on('click', '.link-add-btn', function() {
   //will need variable for topic id that will be used as query parameter
   let linkTitle = $(this).siblings('.form-container').find('.title-input').val();
   let longLink = $(this).siblings('.form-container').find('.url-input').val();
+  let shortLink = createShortUrl();
   let topicId = $(this).attr('id');
   let bodyObj = {
     link_title: linkTitle,
     long_link: longLink,
-    short_link: 'shorty',
+    short_link: shortLink,
     click_count: 0,
     topic_id: topicId
   };
 
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
+    console.log(resObj);
     if (resObj.status === 201) {
-      appendLink(linkTitle, 'shortLink', this)
+      appendLink(linkTitle, bodyObj.short_link, this)
     } else if (resp.status === 422) {
       alert('invalid link entry')
     }
