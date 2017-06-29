@@ -70,6 +70,18 @@ app.get('/api/v1/links', (req, res) => {
     });
 });
 
+app.get('/jet.fuel/:short_link', (req, res) => {
+  const bodyLink = req.params.short_link;
+
+  database('links').where({
+    short_link: `jet.fuel/${bodyLink}`
+  })
+  .then(url => {
+    console.log(url);
+    res.redirect(301, url[0].long_link)
+  })
+})
+
 app.post('/api/v1/links', (req, res) => {
   const link = req.body;
 
@@ -97,50 +109,3 @@ if (!module.parent) {
     console.log(`Server is running on port ${app.get('port')}`);
   })
 }
-
-// app.locals.title = 'JetFuel';
-//
-// app.locals.topics = {};
-// app.locals.links = {};
-//
-// app.get('/', (request, response) => {
-//   response.sendFile('index.html')
-// });
-//
-// app.get('api/topics/:id')
-//
-// app.post('/api/topics/', (request, response) => {
-//   const { topic } = request.body;
-//   const id = md5(topic);
-//
-//   if (!topic) {
-//     return response.status(422).send({
-//       error: 'no topic name was provided'
-//     });
-//   }
-//
-//   app.locals.topics[id] = topic;
-//
-//   console.log(app.locals.topics);
-//   response.status(201).json({ id, topic })
-// })
-//
-// app.post('/api/links/', (request, response) => {
-//   const { link, linkTitle, topicId } = request.body;
-//   const id = md5(link);
-//
-//   if (!link) {
-//     return response.status(422).send({
-//       error: 'no valid link was provided'
-//     });
-//   }
-//
-//   app.locals.links[id] = { url: link, title: linkTitle, topic_ID: topicId };
-//
-//   console.log(app.locals.links);
-//   response.status(201).json({ id, link, linkTitle, topicId })
-// })
-//
-// app.listen(app.get('port'), () => {
-//   console.log(`${app.locals.title} is running on ${app.get('port')}.`)
-// });
