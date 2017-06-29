@@ -77,10 +77,14 @@ app.get('/jet.fuel/:short_link', (req, res) => {
     short_link: `jet.fuel/${bodyLink}`
   })
   .then(url => {
-    console.log(url);
     res.redirect(301, url[0].long_link)
   })
-})
+  .catch(error => {
+    res.status(404).json({
+      error: 'URL was not found'
+    })
+  });
+});
 
 app.post('/api/v1/links', (req, res) => {
   const link = req.body;
@@ -109,3 +113,5 @@ if (!module.parent) {
     console.log(`Server is running on port ${app.get('port')}`);
   })
 }
+
+module.exports = app;
