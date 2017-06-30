@@ -46,13 +46,6 @@ describe('API Routes', () => {
     });
   });
 
-  afterEach((done) => {
-    knex.migrate.rollback()
-    .then(() => {
-      done();
-    });
-  });
-
   describe('GET /api/v1/topics', () => {
     it('should return all of the topics', (done) => {
       chai.request(server)
@@ -79,43 +72,18 @@ describe('API Routes', () => {
     });
   });
 
-  describe('POST /api/v1/topics', () => {
-    it('should create a new topic', (done) => {
+  describe('GET /jet.fuel/:short_link', () => {
+
+    it('should redirect the user to the correct \'long\' link', (done) => {
       chai.request(server)
-      .post('/api/v1/topics')
-      .send({
-        name: 'the CNN',
-      })
+      .get('/jet.fuel/2H1PG')
       .end((err, response) => {
-        response.should.have.status(201);
-        response.body.should.be.a('object');
-        response.body.should.have.property('id');
-        response.body.id.should.equal(3);
-        chai.request(server)
-        .get('/api/v1/topics')
-        .end((err, response) => {
-          response.should.have.status(200);
-          response.should.be.json;
-          response.body[2].should.have.property('id');
-          response.body[2].should.have.property('name');
-          response.body[2].name.should.equal('the CNN');
-          response.body[2].id.should.equal(3);
-          done();
-        })
+        response.should.have.status(200);
+        response.redirects.should.be.a('array')
+        response.redirects[0].should.equal('http://www.twitter.com/')
+        done();
       });
     });
-
-    it('should not create a topic record with missing data', (done) => {
-      chai.request(server)
-      .post('/api/v1/topics')
-      .send({animal: 'unicorn'})
-      .end((err, response) => {
-        response.should.have.status(422);
-        response.body.error.should.equal('Expected format: { name: <String>}. You are missing the name property.')
-        done()
-      });
-    });
-
   });
 
   describe('GET /api/v1/links', () => {
@@ -143,18 +111,43 @@ describe('API Routes', () => {
     });
   })
 
-  describe('GET /jet.fuel/:short_link', () => {
-
-    it('should redirect the user to the correct \'long\' link', (done) => {
+  describe('POST /api/v1/topics', () => {
+    it('should create a new topic', (done) => {
       chai.request(server)
-      .get('/jet.fuel/2H1PG')
+      .post('/api/v1/topics')
+      .send({
+        name: 'News',
+      })
       .end((err, response) => {
-        response.should.have.status(200);
-        response.redirects.should.be.a('array')
-        response.redirects[0].should.equal('http://www.twitter.com/')
-        done();
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        response.body.should.have.property('id');
+        response.body.id.should.equal(3);
+        chai.request(server)
+        .get('/api/v1/topics')
+        .end((err, response) => {
+          response.should.have.status(200);
+          response.should.be.json;
+          response.body[2].should.have.property('id');
+          response.body[2].should.have.property('name');
+          response.body.length.should.equal(3);
+          response.body[2].id.should.equal(3);
+          done();
+        })
       });
     });
+
+    it('should not create a topic record with missing data', (done) => {
+      chai.request(server)
+      .post('/api/v1/topics')
+      .send({animal: 'unicorn'})
+      .end((err, response) => {
+        response.should.have.status(422);
+        response.body.error.should.equal('Expected format: { name: <String>}. You are missing the name property.')
+        done()
+      });
+    });
+
   });
 
   describe('POST /api/v1/links', () => {
