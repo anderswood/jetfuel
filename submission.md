@@ -41,7 +41,7 @@ The code is very coupled/nested and therefore hard to follow, debug and test. It
 
 #### Attach a screenshot or paste the output from your terminal of the result of your test-suite running.
 
-[test suite](https://github.com/anderswood/jetfuel/blob/master/public/images/test_results.png)
+![test suite](https://github.com/anderswood/jetfuel/blob/master/public/images/test_results.png)
 
 #### Please feel free to ask any other questions or make any other statements below!
 
