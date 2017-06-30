@@ -6,8 +6,8 @@ $('#add-btn-div').on('click', () => {
 
   $.post('/api/v1/topics/', { name: newTopic }, (res, text, resObj) => {
     if (resObj.status === 201) {
-      appendTopic(newTopic, res.id)
-
+      appendTopic(newTopic, res.id);
+      $('#topic-input').val('');
     } else if (resObj.status === 422) {
       alert('invalid entry')
     }
@@ -32,6 +32,8 @@ $('#content-container').on('click', '.link-add-btn', function() {
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
       appendLink(linkTitle, bodyObj.short_link, bodyObj.click_count, this)
+      $(this).siblings('.form-container').find('.title-input').val('');
+      $(this).siblings('.form-container').find('.url-input').val('');
     } else if (resp.status === 422) {
       alert('invalid link entry')
     }
