@@ -68,6 +68,25 @@ app.get('/api/v1/links', (req, res) => {
     });
 });
 
+
+app.get('/api/v1/topics/:topic_id/links', (request, response) => {
+  console.log(request.params);
+
+  database('links').where('topic_id', request.params.topic_id).select()
+    .then( links => {
+      if (links.length) {
+        response.status(200).json(links);
+      } else {
+        response.status(404).json({
+          error: `Could not find topic with id ${request.params.topic_id}`
+        })
+      }
+    })
+    .catch( error => {
+      response.status(500).json({ error });
+    })
+})
+
 app.get('/jet.fuel/:short_link', (req, res) => {
   const bodyLink = req.params.short_link;
 
@@ -105,6 +124,17 @@ app.post('/api/v1/links', (req, res) => {
       res.status(500).json({ error })
     })
 });
+
+app.put('/api/v1/links/clickCountIncr', (req, res) => {
+  let updatedClickCount = parseInt(req.body.clickCount) + 1
+  database('links').where('short_link', req.body.shortLinkText).update('click_count', updatedClickCount)
+    .then( thing => {
+      res.status(201).json({ response: 'click_count successfully incremented' })
+    })
+    .catch( error => {
+      res.status(500).json({ error });
+    })
+})
 
 if (!module.parent) {
   app.listen(app.get('port'), () => {

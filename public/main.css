@@ -60,7 +60,7 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
 }
 
 #topic-text-title {
@@ -241,17 +241,23 @@ svg {
 
 }
 
-.link-title, .link-url {
+.link-title, .link-url, .link-clicks {
   display: inline-block;
 }
 
 .link-title {
-  width: 35%;
+  width: 28%;
   margin-left: 12px;
 }
 
 .link-url {
-  width: 60%;
+  width: 58%;
+}
+
+.link-clicks {
+  width: 7%;
+  text-align: right;
+  margin-right: 7px;
 }
 
 @media screen and (max-width: 460px) {

@@ -1,6 +1,6 @@
 const getContent = () => {
   $.get('/api/v1/links')
-    .then((links) => {
+    .then(links => {
       $.get('/api/v1/topics').then(topics => {
         topics.forEach(topic => {
           appendTopic(topic.name, topic.id)
@@ -9,7 +9,7 @@ const getContent = () => {
           $(linkAddButton).closest('.card-body').addClass('card-body-hide');
           links.forEach(link => {
             if (topic.id === link.topic_id) {
-              appendLink(link.link_title, link.short_link, linkAddButton);
+              appendLink(link.link_title, link.short_link, link.click_count, linkAddButton);
             }
           })
         })
@@ -17,14 +17,14 @@ const getContent = () => {
     })
 }
 
-const appendLink = (newTitle, shortLink, thisLocale) => {
+const appendLink = (newTitle, shortLink, clickCount, thisLocale) => {
   let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
 
   linksContainer.append(
-    //need to revisit how we structuring the links....later
     `<div class='link-container'>
       <h4 class='link-title'>${newTitle}</h4>
-      <h4 class='link-url'><a class='link-url' href='${shortLink}'>${shortLink}</a></h4>
+      <h4 class='link-url'><a class='link-url-href' href='${shortLink}'>${shortLink}</a></h4>
+      <h5 class='link-clicks'>${clickCount}</h5>
     </div>`
   )
 }
@@ -54,12 +54,18 @@ const createShortUrl = () => {
   return `jet.fuel/${code}`
 }
 
+const sortLinks = (links, linksContainer, linkAddButton, sortType) => {
+  links.sort( (a,b) => a[sortType] - b[sortType]).reverse();
+  linksContainer.children().remove();
+  links.forEach( link => appendLink(link.link_title, link.short_link, link.click_count, linkAddButton));
+}
+
 const appendTopic = (newTopicText, id) => {
   $('#content-container').append(
     `<article class='topic-card'>
       <header class='topic-title'>
         <h3 class='topic-text'>${newTopicText}</h3>
-        <h3 class='link-qty'>qty</h3>
+        <h3 class='link-qty'></h3>
       </header>
       <section class='card-body'>
         <div class='form-sort-container'>
@@ -81,11 +87,11 @@ const appendTopic = (newTopicText, id) => {
             <div class='radio-btns'>
               <label class='radio-label'>
                 <h5>Recently Added</h5>
-                <input class='radio-added radio-btn' value='recent' type='radio' name='sort${id}' checked>
+                <input class='radio-added radio-btn' id='${id}' value='created_at' type='radio' name='sort${id}' checked>
               </label>
               <label class='radio-label'>
                 <h5 class='most-pop-text'>Most Popular</h5>
-                <input class='radio-popular radio-btn' value='popular' type='radio' name='sort${id}'>
+                <input class='radio-popular radio-btn' id='${id}'  value='click_count' type='radio' name='sort${id}'>
               </label>
             </div>
           </div>
