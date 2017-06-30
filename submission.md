@@ -11,7 +11,7 @@
 [heroku](https://aw-jb-jetfuel.herokuapp.com/)
 
 #### Provide a Screenshot of your Application
-![screenshot]()
+![screenshot](https://github.com/anderswood/jetfuel/blob/master/public/images/app_screenshot.png)
 
 ## Completion
 
@@ -41,7 +41,7 @@ The code is very coupled/nested and therefore hard to follow, debug and test. It
 
 #### Attach a screenshot or paste the output from your terminal of the result of your test-suite running.
 
-[test suite]()
+[test suite](https://github.com/anderswood/jetfuel/blob/master/public/images/test_results.png)
 
 #### Please feel free to ask any other questions or make any other statements below!
 
