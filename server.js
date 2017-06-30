@@ -7,6 +7,8 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+// console.log(configuration);
+
 app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(`${__dirname}/public`))
@@ -39,8 +41,7 @@ app.post('/api/v1/topics', (req, res) => {
   for (let requiredParameter of ['name']) {
     if (!topic[requiredParameter]) {
       return res.status(422).json({
-        error: `Expected format: { name: <String>}.
-        You are missing the ${requiredParameter} property.`
+        error: `Expected format: { name: <String>}. You are missing the ${requiredParameter} property.`
       });
     }
   }
