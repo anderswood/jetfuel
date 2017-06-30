@@ -18,7 +18,7 @@ $('#add-btn-div').on('click', () => {
 })
 
 $('#content-container').on('click', '.link-add-btn', function() {
-  
+
   let linkTitle = $(this).siblings('.form-container').find('.title-input').val();
   let longLink = $(this).siblings('.form-container').find('.url-input').val();
   let shortLink = createShortUrl();
@@ -45,4 +45,8 @@ $('#content-container').on('click', '.topic-title', function() {
   let cardBody = $(this).siblings('.card-body')
 
   cardBody.toggleClass('card-body-hide')
+})
+
+$('#content-container').on('click', '.radio-btn', function() {
+  console.log('click radio!');
 })

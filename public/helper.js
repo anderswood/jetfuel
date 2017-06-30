@@ -81,11 +81,11 @@ const appendTopic = (newTopicText, id) => {
             <div class='radio-btns'>
               <label class='radio-label'>
                 <h5>Recently Added</h5>
-                <input class='radio-added' type='radio' name='sort'>
+                <input class='radio-added radio-btn' value='recent' type='radio' name='sort${id}' checked>
               </label>
               <label class='radio-label'>
                 <h5 class='most-pop-text'>Most Popular</h5>
-                <input class='radio-popular' type='radio' name='sort'>
+                <input class='radio-popular radio-btn' value='popular' type='radio' name='sort${id}'>
               </label>
             </div>
           </div>
