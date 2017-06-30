@@ -33,7 +33,7 @@ describe('Client Routes', () => {
 
 describe('API Routes', () => {
 
-  beforeEach((done) => {
+  beforeEach(done => {
     knex.migrate.rollback()
     .then(() => {
       knex.migrate.latest()
@@ -131,6 +131,7 @@ describe('API Routes', () => {
           response.body[2].should.have.property('id');
           response.body[2].should.have.property('name');
           response.body.length.should.equal(3);
+          response.body[2].name.should.equal('News');
           response.body[2].id.should.equal(3);
           done();
         })
