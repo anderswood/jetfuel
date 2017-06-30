@@ -10,7 +10,6 @@ body {
     rgba(191, 218, 233, 0.5)),
     url('./images/kimon-maritz-181128-min.jpg');
   background-size: cover;
-  /*filter: blur(5px);*/
 }
 
 h1 {

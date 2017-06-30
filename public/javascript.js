@@ -2,7 +2,6 @@
 getContent()
 
 $('#add-btn-div').on('click', () => {
-  //POST new topic to the server
   let newTopic = $('#topic-input').val();
 
   $.post('/api/v1/topics/', { name: newTopic }, (res, text, resObj) => {
@@ -10,7 +9,6 @@ $('#add-btn-div').on('click', () => {
       appendTopic(newTopic, res.id)
 
     } else if (resObj.status === 422) {
-      //function needed to toggle on display error message
       alert('invalid entry')
     }
   })
@@ -57,7 +55,6 @@ $('#content-container').on('click', '.link-url', function() {
       return clickedLinkObj.click_count;
     })
     .then( clickCount => {
-      console.log(clickCount);
       $.ajax({
         method: 'PUT',
         url: '/api/v1/links/clickCountIncr',
@@ -74,10 +71,12 @@ $('#content-container').on('click', '.radio-btn', function() {
   const topicId = $(this).attr('id');
   const sortType = $(this).attr('value');
   const linksContainer = $(this).closest('.form-sort-container').siblings('.links-container');
-  const linkAddButton = $(`button[id='${topicId}']`)
+  const linkAddButton = $(`button[id='${topicId}']`);
 
   $.get(`/api/v1/topics/${topicId}/links`)
-    .then(links => sortLinks(links, linksContainer, linkAddButton, sortType))
+    .then(links => {
+      sortLinks(links, linksContainer, linkAddButton, sortType)
+    })
     .catch(error => console.log(error));
 
 });

@@ -55,7 +55,9 @@ const createShortUrl = () => {
 }
 
 const sortLinks = (links, linksContainer, linkAddButton, sortType) => {
-  links.sort( (a,b) => a[sortType] - b[sortType]).reverse();
+  sortType === 'created_at'
+    ? links.sort( (a,b) => a[sortType] > b[sortType]).reverse()
+    : links.sort( (a,b) => a[sortType] - b[sortType]).reverse();
   linksContainer.children().remove();
   links.forEach( link => appendLink(link.link_title, link.short_link, link.click_count, linkAddButton));
 }

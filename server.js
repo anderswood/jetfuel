@@ -70,7 +70,6 @@ app.get('/api/v1/links', (req, res) => {
 
 
 app.get('/api/v1/topics/:topic_id/links', (request, response) => {
-  console.log(request.params);
 
   database('links').where('topic_id', request.params.topic_id).select()
     .then( links => {
