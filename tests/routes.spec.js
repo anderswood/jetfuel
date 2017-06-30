@@ -51,12 +51,14 @@ describe('API Routes', () => {
       chai.request(server)
       .get('/api/v1/topics')
       .end((err, response) => {
+        const sortedBody = response.body.sort((a, b) => a.id - b.id);
+
         response.should.have.status(200);
         response.should.be.json;
-        response.body[0].should.have.property('id');
-        response.body[0].should.have.property('name');
-        response.body[0].name.should.equal('Docs');
-        response.body[0].id.should.equal(1);
+        sortedBody[0].should.have.property('id');
+        sortedBody[0].should.have.property('name');
+        sortedBody[0].name.should.equal('Docs');
+        sortedBody[0].id.should.equal(1);
         done();
       });
     });
@@ -91,25 +93,55 @@ describe('API Routes', () => {
       chai.request(server)
       .get('/api/v1/links')
       .end((err, response) => {
+        const sortedBody = response.body.sort((a, b) => a.id - b.id);
+
         response.should.have.status(200);
         response.should.be.json;
-        response.body[0].should.have.property('id');
-        response.body[0].should.have.property('link_title');
-        response.body[0].should.have.property('long_link');
-        response.body[0].should.have.property('short_link');
-        response.body[0].should.have.property('click_count');
-        response.body[0].should.have.property('topic_id');
-        response.body[0].id.should.equal(1);
-        response.body[0].link_title.should.equal('the google');
-        response.body[0].long_link.should.equal('http://www.google.com');
-        response.body[0].short_link.should.equal('jet.fuel/5ZvQv');
-        response.body[0].click_count.should.equal(3);
-        response.body[0].topic_id.should.equal(1);
+        sortedBody[0].should.have.property('id');
+        sortedBody[0].should.have.property('link_title');
+        sortedBody[0].should.have.property('long_link');
+        sortedBody[0].should.have.property('short_link');
+        sortedBody[0].should.have.property('click_count');
+        sortedBody[0].should.have.property('topic_id');
+        sortedBody[0].id.should.equal(1);
+        sortedBody[0].link_title.should.equal('the google');
+        sortedBody[0].long_link.should.equal('http://www.google.com');
+        sortedBody[0].short_link.should.equal('jet.fuel/5ZvQv');
+        sortedBody[0].click_count.should.equal(3);
+        sortedBody[0].topic_id.should.equal(1);
         done();
       });
 
     });
   })
+
+  describe('GET /api/v1/topics/:topic_id/links', () => {
+    it('should return all links for a given topic', done => {
+      chai.request(server)
+      .get('/api/v1/topics/1/links')
+      .end((err, response) => {
+        const sortedBody = response.body.sort((a, b) => a.id - b.id);
+
+        response.should.have.status(200);
+        response.should.be.json;
+        sortedBody.length.should.equal(2);
+        sortedBody[0].should.have.property('id');
+        sortedBody[0].should.have.property('link_title');
+        sortedBody[0].should.have.property('long_link');
+        sortedBody[0].should.have.property('short_link');
+        sortedBody[0].should.have.property('click_count');
+        sortedBody[0].should.have.property('topic_id');
+        sortedBody[0].id.should.equal(1);
+        sortedBody[0].link_title.should.equal('the google');
+        sortedBody[0].long_link.should.equal('http://www.google.com');
+        sortedBody[0].short_link.should.equal('jet.fuel/5ZvQv');
+        sortedBody[0].click_count.should.equal(3);
+        sortedBody[0].topic_id.should.equal(1);
+        done();
+      });
+    });
+
+  });
 
   describe('POST /api/v1/topics', () => {
     it('should create a new topic', (done) => {
@@ -126,14 +158,15 @@ describe('API Routes', () => {
         chai.request(server)
         .get('/api/v1/topics')
         .end((err, response) => {
-          console.log(response.body);
+          const sortedBody = response.body.sort((a, b) => a.id - b.id);
+
           response.should.have.status(200);
           response.should.be.json;
-          response.body[2].should.have.property('id');
-          response.body[2].should.have.property('name');
-          response.body.length.should.equal(3);
-          response.body[2].name.should.equal('News');
-          response.body[2].id.should.equal(3);
+          sortedBody[2].should.have.property('id');
+          sortedBody[2].should.have.property('name');
+          sortedBody.length.should.equal(3);
+          sortedBody[2].name.should.equal('News');
+          sortedBody[2].id.should.equal(3);
           done();
         })
       });
@@ -188,6 +221,30 @@ describe('API Routes', () => {
         response.should.have.status(422);
         response.body.error.should.equal('Expected format: { name: <String>}. You are missing the name property.');
         done();
+      });
+    });
+  });
+
+  describe('PUT /api/v1/links/clickCountIncr', () => {
+    it('should increment click count for given shortLink param', done => {
+      chai.request(server)
+      .put('/api/v1/links/clickCountIncr')
+      .send({
+        shortLinkText: 'jet.fuel/5ZvQv',
+        clickCount: 9
+      })
+      .end((err, response) => {
+        response.should.have.status(201)
+        response.body.should.be.a('object')
+        response.body.response.should.equal('click_count successfully incremented')
+        chai.request(server)
+        .get('/api/v1/links')
+        .end((err, response) => {
+          const googleLink = response.body.find(link => link.link_title === 'the google');
+
+          googleLink.click_count.should.equal(10)
+          done()
+        });
       });
     });
   });
