@@ -265,12 +265,6 @@ svg {
   font-size: 1px;
 }
 
-.radio-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .card-body-hide {
   display: none;
 }
@@ -283,11 +277,6 @@ svg {
   width: 98%;
   margin: 0 auto;
 }
-
-/*.link-container {
-  display: flex;
-  justify-content: space-between;
-}*/
 
 .title-url-container, .date-count-container {
   display: inline-block;
