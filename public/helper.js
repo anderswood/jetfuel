@@ -1,3 +1,4 @@
+
 const getContent = () => {
   $.get('/api/v1/links')
     .then(links => {
@@ -9,24 +10,12 @@ const getContent = () => {
           $(linkAddButton).closest('.card-body').addClass('card-body-hide');
           links.forEach(link => {
             if (topic.id === link.topic_id) {
-              appendLink(link.link_title, link.short_link, link.click_count, linkAddButton);
+              appendLink(link, linkAddButton);
             }
           })
         })
       })
     })
-}
-
-const appendLink = (newTitle, shortLink, clickCount, thisLocale) => {
-  let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
-
-  linksContainer.append(
-    `<div class='link-container'>
-      <h4 class='link-title'>${newTitle}</h4>
-      <h4 class='link-url'><a class='link-url-href' href='${shortLink}'>${shortLink}</a></h4>
-      <h5 class='link-clicks'>${clickCount}</h5>
-    </div>`
-  )
 }
 
 const encode = (num) => {
@@ -54,15 +43,39 @@ const createShortUrl = () => {
   return `jet.fuel/${code}`
 }
 
-const sortLinks = (links, linksContainer, linkAddButton, sortType) => {
-  sortType === 'created_at'
-    ? links.sort( (a,b) => a[sortType] > b[sortType]).reverse()
-    : links.sort( (a,b) => a[sortType] - b[sortType]).reverse();
+const sortLinks = (links, linksContainer, linkAddButton, sortType, sortAscendStatus) => {
+    switch(sortType+'_'+sortAscendStatus) {
+      case 'created_at_true':
+        links.sort( (a,b) => a[sortType] > b[sortType]).reverse()
+        break;
+      case 'created_at_false':
+        links.sort( (a,b) => a[sortType] > b[sortType])
+        break;
+      case 'click_count_true':
+        links.sort( (a,b) => a[sortType] - b[sortType]).reverse()
+        break;
+      case 'click_count_false':
+        links.sort( (a,b) => a[sortType] - b[sortType])
+        break;
+    }
+
   linksContainer.children().remove();
-  links.forEach( link => appendLink(link.link_title, link.short_link, link.click_count, linkAddButton));
+  links.forEach( link => appendLink(link, linkAddButton));
 }
 
-const appendTopic = (newTopicText, id) => {
+const addSortSVG = () => {
+  return (
+    `
+    <label class='sort-label'>
+      <svg class='sort-svg' fill="#FFF" width='24' height'24' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g><path d="M10.7003505,9.06802037 L8.78600431,9.06802037 L8.78600431,18.6999998 L5.91406855,18.6999998 L5.91406855,9.06802037 L4,9.06802037 L7.35003643,5 L10.7003505,9.06802037 Z M19.5002349,5.37759403 L19.4991243,8.76566751 L12.0591337,8.76566751 L9.26854727,5.37648346 L19.5002349,5.37759403 Z M16.3950793,13.7326948 L10.0279,13.7326948 L10.0279,10.3435108 L16.3961898,10.3446214 L16.3950793,13.7326948 Z M13.910455,18.6999998 L10.0279,18.6999998 L10.0279,15.3108158 L13.9126762,15.3108158 L13.910455,18.6999998 Z"></path></g></g>
+      </svg>
+    </label>
+    `
+  )
+}
+
+const appendTopic = (newTopicText, id, active = '') => {
   $('#content-container').append(
     `<article class='topic-card'>
       <header class='topic-title'>
@@ -85,20 +98,37 @@ const appendTopic = (newTopicText, id) => {
             <button id=${id} class='link-add-btn'><h5>Add</h5></button>
           </div>
           <div class='sort-options'>
-            <h4>Sort</h4>
-            <div class='radio-btns'>
-              <label class='radio-label'>
-                <h5>Recently Added</h5>
-                <input class='radio-added radio-btn' id='${id}' value='created_at' type='radio' name='sort${id}' checked>
-              </label>
-              <label class='radio-label'>
-                <h5 class='most-pop-text'>Most Popular</h5>
-                <input class='radio-popular radio-btn' id='${id}'  value='click_count' type='radio' name='sort${id}'>
-              </label>
+            <div class='sort-btn sort-btn-added sort-ascend sort-active' id='${id}' value='created_at'>
+              <h5>Recently Added</h5>
+              ${addSortSVG()}
+            </div>
+            <div class='sort-btn sort-btn-popular sort-ascend' id='${id}' value='click_count'>
+              <h5>Most Popular</h5>
+              ${addSortSVG()}
             </div>
           </div>
         </div>
         <div class='links-container'></div>
       </section>
     </article>`)
+}
+
+const appendLink = (linkObj, thisLocale) => {
+  let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
+  const linkCreateDate = moment(linkObj.created_at).format('MMMM Do YYYY, h:mm:ss a');
+
+  linksContainer.append(
+    `<div class='link-container'>
+      <div class='title-url-container'>
+        <h4 class='link-title'>${linkObj.link_title}</h4>
+        <h4 class='link-url'>
+          <a class='link-url-href' href='${linkObj.short_link}'>${linkObj.short_link}</a>
+        </h4>
+      </div>
+      <div class='date-count-container'>
+        <h5 class='link-created-date'>${linkCreateDate}</h5>
+        <h5 class='link-clicks'>${linkObj.click_count}</h5>
+      </div>
+    </div>`
+)
 }
