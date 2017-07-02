@@ -51,7 +51,7 @@ svg {
 }
 
 #topic-input-container {
-  background: rgba(105, 156, 186, 0.5);
+  background: rgba(105, 156, 186, 1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,8 +70,8 @@ svg {
   width: 150px;
   border: none;
   color: #FFF;
-  outline-color: rgba(105, 156, 186, 0.9);
-  background: rgba(105, 156, 186, 0.15);
+  outline-color: rgba(79, 66, 58, 0.9);
+  background: rgba(79, 66, 58, 0.15);
   text-indent: 4px;
   padding: 4px;
 }
@@ -87,13 +87,17 @@ svg {
   align-items: center;
   background-color: rgba(0, 0, 0, 0);
   border: none;
-  outline: 1px solid rgba(105, 156, 186, 0.9);
+  outline: 1px solid rgba(79, 66, 58, 0.9);
   height: 20.8px;
 }
 
 #add-btn-div:hover {
-  background-color: rgba(105, 156, 186, 1);
+  background-color: rgba(79, 66, 58, 0.5);
   cursor: pointer;
+}
+
+#add-btn-div:hover > #add-btn-text {
+  color: #000;
 }
 
 #add-btn-text {
@@ -127,10 +131,10 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(79, 66, 58, 0.5);
-  margin-top: 1px;
-  padding-bottom: 4px;
-  padding-top: 2px;
+  box-sizing: border-box;
+  background: rgba(105, 156, 186, 0.8);
+  padding: 4px 12px 5px 4px;
+  border-bottom: 1px solid rgba(79, 66, 58, 0.15)
 }
 
 .form-sort-container, .links-container {
@@ -142,11 +146,7 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
-}
-
-.form-container {
-
+  width: 55%;
 }
 
 .title-container, .url-container {
@@ -195,31 +195,74 @@ svg {
 }
 
 .link-add-btn:hover {
-  background-color: rgba(79, 66, 58, 1);
+  background-color: rgba(79, 66, 58, 0.5);
   cursor: pointer;
 }
 
+
+.link-add-btn:hover > h5 {
+  color: #000;
+}
+
 .sort-options {
-  text-align: center;
-  width: 40%;
-}
-
-.radio-label {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: 45%;
+}
+
+.sort-btn {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  width: 133px;
+  height: 20.8px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: 1px solid rgba(79, 66, 58, 0.9);
+  padding: 2px 1px 3px 6px;
 }
 
-.radio-label h5 {
-  margin-right: 6px;
+.sort-btn:hover {
+  cursor: pointer;
 }
 
-.radio-popular, .radio-added {
-    margin: 3px 0 0 0;
+.sort-btn:hover > label {
+  cursor: pointer;
 }
 
-.most-pop-text {
+.sort-btn:hover > h5 {
+  color: #000;
+}
+
+.sort-btn:hover > label svg {
+  fill: #000;
+}
+
+.sort-btn-added {
+  margin-bottom: 4px;
+}
+
+.sort-btn-popular {
   margin-left: 12px;
+}
+
+.sort-active {
+  background: rgba(79, 66, 58, 0.5);
+}
+
+.sort-svg {
+  margin-left: 0;
+  transform: scaleY(-1);
+}
+
+.sort-ascend > label svg {
+  transform: scaleY(1);
+}
+
+.sort-label {
+  font-size: 1px;
 }
 
 .card-body-hide {
@@ -227,38 +270,83 @@ svg {
 }
 
 .links-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   background: rgba(105, 156, 186, 0.8);
   width: 98%;
   margin: 0 auto;
 }
 
-.link-container {
-
+.title-url-container, .date-count-container {
+  display: inline-block;
+  width: 49%;
 }
 
-.link-title, .link-url, .link-clicks {
+.date-count-container {
+  text-align: right;
+}
+
+.link-title, .link-url, .link-created-date, .link-clicks {
   display: inline-block;
 }
 
 .link-title {
-  width: 28%;
+  width: 58%;
   margin-left: 12px;
 }
 
 .link-url {
-  width: 58%;
+  width: 35%;
+}
+
+.link-created-date {
+  width: 80%;
+  text-align: right;
 }
 
 .link-clicks {
-  width: 7%;
+  width: 9%;
   text-align: right;
   margin-right: 7px;
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 520px) {
   .link-inputs, #topic-input {
     width: 90px;
   }
 
+  .add-form {
+    width: 60%;
+  }
+
+  .sort-btn {
+    width: 101px;
+  }
+
+  .sort-options {
+    width: 40%;
+  }
+
+  .title-url-container {
+    width: 89%;
+  }
+
+  .date-count-container {
+    width: 8%;
+  }
+
+  .link-created-date {
+    display: none;
+  }
+
+  .link-clicks {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  h5 {
+    font-size: .55em;
+  }
 
 }

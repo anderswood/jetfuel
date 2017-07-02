@@ -17,13 +17,13 @@ $('#add-btn-div').on('click', () => {
 
 $('#content-container').on('click', '.link-add-btn', function() {
 
-  let linkTitle = $(this).siblings('.form-container').find('.title-input').val();
-  let longLink = $(this).siblings('.form-container').find('.url-input').val();
+  let linkTitle = $(this).siblings('.form-container').find('.title-input');
+  let longLink = $(this).siblings('.form-container').find('.url-input');
   let shortLink = createShortUrl();
   let topicId = $(this).attr('id');
   let bodyObj = {
-    link_title: linkTitle,
-    long_link: longLink,
+    link_title: linkTitle.val(),
+    long_link: longLink.val(),
     short_link: shortLink,
     click_count: 0,
     topic_id: topicId
@@ -31,9 +31,9 @@ $('#content-container').on('click', '.link-add-btn', function() {
 
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
-      appendLink(linkTitle, bodyObj.short_link, bodyObj.click_count, this)
-      $(this).siblings('.form-container').find('.title-input').val('');
-      $(this).siblings('.form-container').find('.url-input').val('');
+      appendLink(bodyObj, this)
+      linkTitle.val('');
+      longLink.val('');
     } else if (resp.status === 422) {
       alert('invalid link entry')
     }
@@ -69,15 +69,28 @@ $('#content-container').on('click', '.link-url', function() {
 
 });
 
-$('#content-container').on('click', '.radio-btn', function() {
+$('#content-container').on('click', '.sort-btn', function() {
   const topicId = $(this).attr('id');
   const sortType = $(this).attr('value');
   const linksContainer = $(this).closest('.form-sort-container').siblings('.links-container');
   const linkAddButton = $(`button[id='${topicId}']`);
+  const correspondingSortBtn = $(this).siblings('.sort-btn');
+  let activeStatus = $(this).hasClass('sort-active');
+  let sortAscendStatus = $(this).hasClass('sort-ascend');
+
+  if (activeStatus) {
+    sortAscendStatus = !sortAscendStatus;
+    $(this).toggleClass('sort-ascend');
+    console.log(sortAscendStatus);
+  } else {
+    $(this).toggleClass('sort-active');
+    correspondingSortBtn.toggleClass('sort-active');
+    activeStatus = !activeStatus;
+  }
 
   $.get(`/api/v1/topics/${topicId}/links`)
     .then(links => {
-      sortLinks(links, linksContainer, linkAddButton, sortType)
+      sortLinks(links, linksContainer, linkAddButton, sortType, sortAscendStatus)
     })
     .catch(error => console.log(error));
 
