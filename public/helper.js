@@ -132,3 +132,39 @@ const appendLink = (linkObj, thisLocale) => {
     </div>`
 )
 }
+
+const urlValidation = (userURL) => {
+
+  if (userURL.includes('http://www.') || userURL.includes('https://www.')) {
+    return userURL
+  } else if (userURL.includes('www.')) {
+    return `https://${userURL}`
+  } else if (userURL.includes('http') || userURL.includes('https') && !userURL.includes('www')) {
+    return userURL
+  } else if (!userURL.includes('http://www.') || !userURL.includes('https://www.'))  {
+    return `https://www.${userURL}`
+  } else {
+    return userURL
+  }
+}
+
+const validUrlCheck = (userInput) => {
+  let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+
+  if (res === null) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+const userInputValidation = (userInput) => {
+  let userUrl = urlValidation(userInput)
+  let longLinkCheck = validUrlCheck(userUrl)
+
+  if (longLinkCheck) {
+    return userUrl
+  } else {
+    alert('Invalid URL format, please enter the URL in the following format: https://www.< URL Address >')
+  }
+}
