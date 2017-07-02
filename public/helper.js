@@ -165,6 +165,6 @@ const userInputValidation = (userInput) => {
   if (longLinkCheck) {
     return userUrl
   } else {
-    alert('Invalid URL format, please enter the URL in the following format: https://www.< URL Address >')
+    alert('Invalid URL format, please enter the URL with an "https:// prefix">')
   }
 }
