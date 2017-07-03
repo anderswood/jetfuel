@@ -30,7 +30,10 @@ $('#content-container').on('click', '.link-add-btn', function() {
     topic_id: topicId
   };
 
-  console.log(validatedLongLink);
+  if (validatedLongLink === 'invalid' ) {
+    longLink.val('');
+    return
+  }
 
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
