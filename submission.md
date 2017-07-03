@@ -16,11 +16,9 @@
 ## Completion
 
 #### Were you able to complete the base functionality?
-
 Yes.
 
 #### Which extensions, if any, did you complete?
-
 None... it looks nice?
 
 # Code Quality
