@@ -19,15 +19,18 @@ $('#content-container').on('click', '.link-add-btn', function() {
 
   let linkTitle = $(this).siblings('.form-container').find('.title-input');
   let longLink = $(this).siblings('.form-container').find('.url-input');
+  let validatedLongLink = userInputValidation(longLink.val())
   let shortLink = createShortUrl();
   let topicId = $(this).attr('id');
   let bodyObj = {
     link_title: linkTitle.val(),
-    long_link: longLink.val(),
+    long_link: validatedLongLink,
     short_link: shortLink,
     click_count: 0,
     topic_id: topicId
   };
+
+  console.log(validatedLongLink);
 
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
@@ -81,7 +84,6 @@ $('#content-container').on('click', '.sort-btn', function() {
   if (activeStatus) {
     sortAscendStatus = !sortAscendStatus;
     $(this).toggleClass('sort-ascend');
-    console.log(sortAscendStatus);
   } else {
     $(this).toggleClass('sort-active');
     correspondingSortBtn.toggleClass('sort-active');
