@@ -5,7 +5,8 @@
   "main": "javascript.js",
   "scripts": {
     "test": "mocha ./tests/routes.spec.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "jshint ."
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
+    "jetfuel-validate": "git+https://github.com/jbevis/jetfuel-validate.git",
+    "jshint": "^2.9.5",
     "knex": "^0.13.0",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
@@ -30,5 +33,8 @@
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
     "mocha": "^3.4.2"
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
