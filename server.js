@@ -126,6 +126,7 @@ app.post('/api/v1/links', (req, res) => {
 
 app.put('/api/v1/links/clickCountIncr', (req, res) => {
   let updatedClickCount = parseInt(req.body.clickCount) + 1
+  
   database('links').where('short_link', req.body.shortLinkText).update('click_count', updatedClickCount)
     .then( thing => {
       res.status(201).json({ response: 'click_count successfully incremented' })

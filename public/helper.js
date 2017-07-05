@@ -166,6 +166,6 @@ const userInputValidation = (userInput) => {
     return userUrl
   } else {
     return 'invalid'
-    alert('Invalid URL format, please enter the URL with an "https:// prefix">')
+    alert('Invalid URL format, please enter the URL with an "https://" prefix>')
   }
 }
