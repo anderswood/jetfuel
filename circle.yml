@@ -8,6 +8,10 @@ machine:
 
 deployment:
   staging:
-    branch: master
+    branch: staging
     heroku:
       appname: aw-jb-jetfuel-staging
+  production:
+    branch: master
+    heroku:
+      appname: aw-jb-jetfuel
