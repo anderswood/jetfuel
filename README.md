@@ -18,3 +18,6 @@ Jet Fuel is single page url encoding web application built using Node/Express.js
 
 ### Contributors
 Anders Wood & Jack Bevis
+
+### CircleCI Status
+[![CircleCI](https://circleci.com/gh/anderswood/jetfuel.svg?style=svg)](https://circleci.com/gh/anderswood/jetfuel)
