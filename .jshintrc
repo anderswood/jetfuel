@@ -1,7 +1,7 @@
 {
   "node": true,
 
-  "asi" : true,
+  "asi" : false,
   "curly": false,
   "esversion": 6,
   "latedef": false,
@@ -10,4 +10,4 @@
   "unused": false,
   "trailing": true,
   "-W117": true
-} 
+}
