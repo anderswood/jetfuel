@@ -15,7 +15,7 @@ let topicsData = [{
     {id: 3, link_title: 'the Twitter', long_link: 'http://www.twitter.com', short_link: 'jet.fuel/2H1PG', click_count: 13},
     {id: 4, link_title: 'the \'stagram', long_link: 'http://www.instagram.com', short_link: 'jet.fuel/zsWr', click_count: 5},
    ]
-}]
+}];
 
 const createTopic = (knex, topic) => {
   return knex('topics').insert({
@@ -33,10 +33,10 @@ const createTopic = (knex, topic) => {
           click_count: link.click_count,
           topic_id: topicId[0]
         })
-      )
+      );
     });
 
-    return Promise.all(linkPromises)
+    return Promise.all(linkPromises);
   });
 };
 

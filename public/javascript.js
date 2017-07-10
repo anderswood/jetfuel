@@ -1,5 +1,5 @@
 
-getContent()
+getContent();
 
 $('#add-btn-div').on('click', () => {
   let newTopic = $('#topic-input').val();
@@ -9,17 +9,17 @@ $('#add-btn-div').on('click', () => {
       appendTopic(newTopic, res.id);
       $('#topic-input').val('');
     } else if (resObj.status === 422) {
-      alert('invalid entry')
+      alert('invalid entry');
     }
   })
-    .catch(error => console.log(error))
-})
+    .catch(error => console.log(error));
+});
 
 $('#content-container').on('click', '.link-add-btn', function() {
 
   let linkTitle = $(this).siblings('.form-container').find('.title-input');
   let longLink = $(this).siblings('.form-container').find('.url-input');
-  let validatedLongLink = userInputValidation(longLink.val())
+  let validatedLongLink = userInputValidation(longLink.val());
   let shortLink = createShortUrl();
   let topicId = $(this).attr('id');
   let bodyObj = {
@@ -32,25 +32,25 @@ $('#content-container').on('click', '.link-add-btn', function() {
 
   if (validatedLongLink === 'invalid' ) {
     longLink.val('');
-    return
+    return;
   }
 
   $.post('/api/v1/links/', bodyObj, (res, text, resObj) => {
     if (resObj.status === 201) {
-      appendLink(bodyObj, this)
+      appendLink(bodyObj, this);
       linkTitle.val('');
       longLink.val('');
     } else if (resp.status === 422) {
-      alert('invalid link entry')
+      alert('invalid link entry');
     }
   })
-  .catch(error => console.log(error))
+  .catch(error => console.log(error));
 });
 
 $('#content-container').on('click', '.topic-title', function() {
-  let cardBody = $(this).siblings('.card-body')
+  let cardBody = $(this).siblings('.card-body');
 
-  cardBody.toggleClass('card-body-hide')
+  cardBody.toggleClass('card-body-hide');
 });
 
 
@@ -60,6 +60,7 @@ $('#content-container').on('click', '.link-url', function() {
   $.get('/api/v1/links')
     .then(links => {
       const clickedLinkObj = links.find(linkObj => linkObj.short_link === shortLinkText);
+
       return clickedLinkObj.click_count;
     })
     .then( clickCount => {
@@ -70,8 +71,8 @@ $('#content-container').on('click', '.link-url', function() {
         success: result => {
           console.log(result.response);
         }
-      })
-    })
+      });
+    });
 
 });
 
@@ -95,7 +96,7 @@ $('#content-container').on('click', '.sort-btn', function() {
 
   $.get(`/api/v1/topics/${topicId}/links`)
     .then(links => {
-      sortLinks(links, linksContainer, linkAddButton, sortType, sortAscendStatus)
+      sortLinks(links, linksContainer, linkAddButton, sortType, sortAscendStatus);
     })
     .catch(error => console.log(error));
 

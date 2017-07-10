@@ -5,8 +5,8 @@ const addSortSVG = () => {
       <g><path d="M10.7003505,9.06802037 L8.78600431,9.06802037 L8.78600431,18.6999998 L5.91406855,18.6999998 L5.91406855,9.06802037 L4,9.06802037 L7.35003643,5 L10.7003505,9.06802037 Z M19.5002349,5.37759403 L19.4991243,8.76566751 L12.0591337,8.76566751 L9.26854727,5.37648346 L19.5002349,5.37759403 Z M16.3950793,13.7326948 L10.0279,13.7326948 L10.0279,10.3435108 L16.3961898,10.3446214 L16.3950793,13.7326948 Z M13.910455,18.6999998 L10.0279,18.6999998 L10.0279,15.3108158 L13.9126762,15.3108158 L13.910455,18.6999998 Z"></path></g></g>
     </svg>
   </label>`
-  )
-}
+  );
+};
 
 const appendTopic = (newTopicText, id, active = '') => {
   $('#content-container').append(
@@ -43,8 +43,8 @@ const appendTopic = (newTopicText, id, active = '') => {
           </div>
           <div class='links-container'></div>
         </section>
-      </article>`)
-}
+      </article>`);
+};
 
 const appendLink = (linkObj, thisLocale) => {
   let linksContainer = $(thisLocale).closest('.form-sort-container').siblings('.links-container');
@@ -63,8 +63,8 @@ const appendLink = (linkObj, thisLocale) => {
         <h5 class='link-clicks'>${linkObj.click_count}</h5>
       </div>
     </div>`
-  )
-}
+  );
+};
 
 
 const getContent = () => {
@@ -72,19 +72,19 @@ const getContent = () => {
     .then(links => {
       $.get('/api/v1/topics').then(topics => {
         topics.forEach(topic => {
-          appendTopic(topic.name, topic.id)
-          let linkAddButton = $(`button[id='${topic.id}']`)
+          appendTopic(topic.name, topic.id);
+          let linkAddButton = $(`button[id='${topic.id}']`);
 
           $(linkAddButton).closest('.card-body').addClass('card-body-hide');
           links.forEach(link => {
             if (topic.id === link.topic_id) {
               appendLink(link, linkAddButton);
             }
-          })
-        })
-      })
-    })
-}
+          });
+        });
+      });
+    });
+};
 
 const encode = (num) => {
   const alphabet = '123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
@@ -98,53 +98,53 @@ const encode = (num) => {
     encoded = alphabet[remainder].toString() + encoded;
   }
   return encoded;
-}
+};
 
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 const createShortUrl = () => {
-  let randomNum = getRandomInt(1, 100000000)
-  let code = encode(randomNum)
+  let randomNum = getRandomInt(1, 100000000);
+  let code = encode(randomNum);
 
-  return `jet.fuel/${code}`
-}
+  return `jet.fuel/${code}`;
+};
 
 const sortLinks = (links, linksContainer, linkAddButton, sortType, sortAscendStatus) => {
-    switch(sortType+'_'+sortAscendStatus) {
-      case 'created_at_true':
-        links.sort( (a,b) => a[sortType] > b[sortType]).reverse()
-        break;
-      case 'created_at_false':
-        links.sort( (a,b) => a[sortType] > b[sortType])
-        break;
-      case 'click_count_true':
-        links.sort( (a,b) => a[sortType] - b[sortType]).reverse()
-        break;
-      case 'click_count_false':
-        links.sort( (a,b) => a[sortType] - b[sortType])
-        break;
-    }
+  switch (sortType+'_'+sortAscendStatus) {
+  case 'created_at_true':
+    links.sort( (a, b) => a[sortType] > b[sortType]).reverse();
+    break;
+  case 'created_at_false':
+    links.sort( (a, b) => a[sortType] > b[sortType]);
+    break;
+  case 'click_count_true':
+    links.sort( (a, b) => a[sortType] - b[sortType]).reverse();
+    break;
+  case 'click_count_false':
+    links.sort( (a, b) => a[sortType] - b[sortType]);
+    break;
+  }
 
   linksContainer.children().remove();
   links.forEach( link => appendLink(link, linkAddButton));
-}
+};
 
 const urlValidation = (userURL) => {
 
   if (userURL.includes('http://www.') || userURL.includes('https://www.')) {
-    return userURL
+    return userURL;
   } else if (userURL.includes('www.')) {
-    return `https://${userURL}`
+    return `https://${userURL}`;
   } else if (userURL.includes('http') || userURL.includes('https') && !userURL.includes('www')) {
-    return userURL
+    return userURL;
   } else if (!userURL.includes('http://www.') || !userURL.includes('https://www.'))  {
-    return `https://www.${userURL}`
+    return `https://www.${userURL}`;
   } else {
-    return userURL
+    return userURL;
   }
-}
+};
 
 const validUrlCheck = (userInput) => {
   let res = userInput.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
@@ -154,16 +154,16 @@ const validUrlCheck = (userInput) => {
   } else {
     return true;
   }
-}
+};
 
 const userInputValidation = (userInput) => {
-  let userUrl = urlValidation(userInput)
-  let longLinkCheck = validUrlCheck(userUrl)
+  let userUrl = urlValidation(userInput);
+  let longLinkCheck = validUrlCheck(userUrl);
 
   if (longLinkCheck) {
-    return userUrl
+    return userUrl;
   } else {
-    return 'invalid'
-    alert('Invalid URL format, please enter the URL with an "https://" prefix>')
+    alert('Invalid URL format, please enter the URL with an "https://" prefix>');
+    return 'invalid';
   }
-}
+};
