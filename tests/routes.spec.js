@@ -66,11 +66,11 @@ describe('API Routes', () => {
 
     it('should return a 404 if directed to a non existent endpoint', (done) => {
       chai.request(server)
-      .get('/api/v1/folders')
+      .get('/api/v1/notreal')
       .end((error, response) => {
 
-        response.should.have.status(404)
-        done()
+        response.should.have.status(404);
+        done();
       });
     });
   });
@@ -82,8 +82,8 @@ describe('API Routes', () => {
       .get('/jet.fuel/2H1PG')
       .end((err, response) => {
         response.should.have.status(200);
-        response.redirects.should.be.a('array')
-        response.redirects[0].should.equal('http://www.twitter.com/')
+        response.redirects.should.be.a('array');
+        response.redirects[0].should.equal('http://www.twitter.com/');
         done();
       });
     });
@@ -114,7 +114,7 @@ describe('API Routes', () => {
       });
 
     });
-  })
+  });
 
   describe('GET /api/v1/topics/:topic_id/links', () => {
     it('should return all links for a given topic', done => {
@@ -169,7 +169,7 @@ describe('API Routes', () => {
           sortedBody[2].name.should.equal('News');
           sortedBody[2].id.should.equal(3);
           done();
-        })
+        });
       });
     });
 
@@ -179,8 +179,8 @@ describe('API Routes', () => {
       .send({animal: 'unicorn'})
       .end((err, response) => {
         response.should.have.status(422);
-        response.body.error.should.equal('Expected format: { name: <String>}. You are missing the name property.')
-        done()
+        response.body.error.should.equal('Expected format: { name: <String>}. You are missing the name property.');
+        done();
       });
     });
 
@@ -190,11 +190,11 @@ describe('API Routes', () => {
 
     it('should add a new link', (done) => {
       const linkBody = { link_title: 'StackOverflow',
-                       long_link: 'http://www.stackoverflow.com',
-                       short_link: 'jet.fuel/5tU8',
-                       click_count: '0',
-                       'topic_id': 1
-                     };
+        long_link: 'http://www.stackoverflow.com',
+        short_link: 'jet.fuel/5tU8',
+        click_count: '0',
+        'topic_id': 1
+      };
 
       chai.request(server)
       .post('/api/v1/links')
@@ -210,10 +210,10 @@ describe('API Routes', () => {
 
     it('should not add a new link if missing a parameter', () => {
       const badLink = { link_title: 'StackOverflow',
-                        long_link: 'http://www.stackoverflow.com',
-                        click_count: '0',
-                        topic_id: 1
-                      };
+        long_link: 'http://www.stackoverflow.com',
+        click_count: '0',
+        topic_id: 1
+      };
 
       chai.request(server)
       .post('api/v1/links')
@@ -235,16 +235,16 @@ describe('API Routes', () => {
         clickCount: 9
       })
       .end((err, response) => {
-        response.should.have.status(201)
-        response.body.should.be.a('object')
-        response.body.response.should.equal('click_count successfully incremented')
+        response.should.have.status(201);
+        response.body.should.be.a('object');
+        response.body.response.should.equal('click_count successfully incremented');
         chai.request(server)
         .get('/api/v1/links')
         .end((err, response) => {
           const googleLink = response.body.find(link => link.link_title === 'the google');
 
-          googleLink.click_count.should.equal(10)
-          done()
+          googleLink.click_count.should.equal(10);
+          done();
         });
       });
     });
