@@ -100,3 +100,15 @@ $('#content-container').on('click', '.sort-btn', function() {
     .catch(error => console.log(error));
 
 });
+
+if ('serviceWorker' in navigator ) {
+  window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(registration => {
+          console.log('registration sucessful:', registration);
+        })
+        .catch(error => {
+          console.log('registration error:', error);
+        })
+  })
+}
